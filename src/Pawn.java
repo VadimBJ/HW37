@@ -1,4 +1,3 @@
-// класс "Пешка"
 public class Pawn {
   public enum Color {
     WHITE,
@@ -17,41 +16,51 @@ public class Pawn {
     this.column = column;
   }
 
-  // геттер для номера строки
-  // public - потому что геттер
-  // не static - потому что для конкретной фигуры
   public int getRow() {
     return row;
   }
 
-  // геттер для номера столбца
   public int getColumn() {
     return column;
   }
 
-  // сеттеров отдельно для строки и столбца не будет - можно только менять координаты вместе
-  // "сеттер" для координат
-  // public, потому что сеттер
-  // не static, потому что для конкретной фигуры
   public void setCoordinates(int row, int column) {
     checkCoordinates(row, column);
-    // TODO проверка возможности хода
+    if (this.row == row && this.column == column) {
+      System.out.println("This move is not available!");
+      return;
+    }
+    if (this.column != column) {
+      System.out.println("This move is not available!");
+      return;
+    }
+
+    if (this.color.equals(color.WHITE)) {
+      if (this.row == 2 && (row - this.row) > 0 && (row - this.row) < 3){
+        this.row=row;
+      } else if (row-this.row==1) {
+        this.row=row;
+      }else {
+        System.out.println("This move is not available!");
+        return;
+      }
+    }
+    if (this.color.equals(Color.BLACK)) {
+      if (this.row == 7 && (row - this.row) < 0 && (row - this.row) > -3){
+        this.row=row;
+      } else if (row-this.row==-1) {
+        this.row=row;
+      }else {
+        System.out.println("This move is not available!");
+        return;
+      }
+    }
+
   }
 
-  // проверка корректности координат
-  // private - потому что "служебный"
-  // static - не связан с конкретной фигурой, предварительная проверка
   private static void checkCoordinates(int row, int column) {
     if (row < 1 || row > 8) {
       throw new IllegalArgumentException("Некорректный номер строки: " + row);
-      // ошибка - неправильный аргумент
-      // выбрасываем её самостоятельно - теперь наш собственный код может сообщать об ошибке
-      // throw (объект класса Исключение);
-      // throw new КлассИсключения();
-      // КлассИсключения() - конструктор по умолчанию, "просто ошибка"
-      // КлассИсключения(String сообщениеОбОшибке) - ошибка "с подробностями",
-      //  их видно через getMessage()
-      // условие-стражник для метода, в котором нельзя просто написать return
     }
 
     if (column < 1 || column > 8) {
